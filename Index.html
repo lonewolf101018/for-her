@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Special Question ❤️</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f0;
+            margin-top: 100px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #noBtn {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
 
+    <h1>Hey ❤️</h1>
+    <h2>I have something to ask you...</h2>
+    <p>You make my days brighter and my life happier.</p>
+    <h2>Will you be my girlfriend? 💖</h2>
+
+    <button onclick="yesClicked()">Yes 💕</button>
+    <button id="noBtn" onmouseover="moveButton()">No 😜</button>
+
+    <script>
+        function yesClicked() {
+            alert("Yayyy! You just made me the happiest person! ❤️");
+        }
+
+        function moveButton() {
+            let btn = document.getElementById("noBtn");
+            btn.style.top = Math.random() * window.innerHeight + "px";
+            btn.style.left = Math.random() * window.innerWidth + "px";
+        }
+    </script>
+
+</body>
+</html>
