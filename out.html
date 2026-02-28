@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Date with Kiki?</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    }
+
+    h1 {
+      margin-top: 100px;
+      color: white;
+      font-size: 40px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 20px;
+      transition: 0.2s;
+    }
+
+    #yesBtn {
+      background-color: #ff4b5c;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: white;
+      color: #ff4b5c;
+      position: absolute;
+    }
+
+    #loveMessage {
+      display: none;
+      font-size: 45px;
+      color: white;
+      margin-top: 30px;
+      animation: pop 0.5s ease-in-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -10px;
+      color: red;
+      font-size: 20px;
+      animation: floatUp 5s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Kiki 💕<br>Will you go on a cute evening date with me at 5 PM? 🌅❤️</h1>
+
+  <button id="yesBtn">Yes 💖</button>
+  <button id="noBtn">No 😜</button>
+
+  <div id="loveMessage">I LOVE YOU KIKI ❤️😘</div>
+
+  <canvas id="confetti"></canvas>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const loveMessage = document.getElementById("loveMessage");
+
+    // Move No button
+    noBtn.addEventListener("mouseover", function() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    setInterval(createHeart, 300);
+
+    // Confetti
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let confetti = [];
+
+    function createConfetti() {
+      for (let i = 0; i < 150; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 50,
+          color: "hsl(" + Math.random() * 360 + ", 100%, 50%)",
+          tilt: Math.floor(Math.random() * 10) - 10
+        });
+      }
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < confetti.length; i++) {
+        let c = confetti[i];
+        ctx.beginPath();
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.r, c.r);
+      }
+      updateConfetti();
+    }
+
+    function updateConfetti() {
+      for (let i = 0; i < confetti.length; i++) {
+        let c = confetti[i];
+        c.y += Math.cos(c.d) + 2;
+        c.x += Math.sin(0);
+        if (c.y > canvas.height) {
+          confetti.splice(i, 1);
+        }
+      }
+    }
+
+    yesBtn.addEventListener("click", function() {
+      loveMessage.style.display = "block";
+      createConfetti();
+      setInterval(drawConfetti, 20);
+      alert("I Love You Kiki ❤️");
+    });
+  </script>
+
+</body>
+</html>
